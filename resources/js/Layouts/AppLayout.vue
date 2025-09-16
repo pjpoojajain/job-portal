@@ -48,29 +48,40 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
+                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                Dashboard
+                                </button>
+                            </div>
+                            <div v-if="$page.props.authUser.roles.includes('jobseeker')" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                Jobs
+                                </button>
+                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                Companies
+                                </button>
+                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                Services
+                                </button>
                             </div>
                         </div>
-                        <div class="flex">
-                            <p v-if="$page.props.authUser.roles.includes('employer')">
-                            {{ $page.props.authUser.roles[0]}}
-                            </p>
-
-                            <p v-else-if="$page.props.authUser.roles.includes('jobseeker')">
-                            {{ $page.props.authUser.roles[0]}}
-                            </p>
-
-                            <p v-else-if="$page.props.authUser.roles.includes('admin')">
-                            {{ $page.props.authUser.roles[0]}}
-                            </p>
-
-                            <p v-else>
-                            🔒 Not Logged In
-                            </p>
-                        </div>
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <div class="ms-3 relative">
+                                <p v-if="$page.props.authUser.roles.includes('employer')">
+                                    <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    {{ $page.props.authUser.roles[0]}}
+                                    </NavLink>
+                                </p>
+                                <p v-else-if="$page.props.authUser.roles.includes('jobseeker')">
+                                    <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    {{ $page.props.authUser.roles[0]}}
+                                    </NavLink>
+                                </p>
+                                <p v-else-if="$page.props.authUser.roles.includes('admin')">
+                                    <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    {{ $page.props.authUser.roles[0]}}
+                                    </NavLink>
+                                </p>
+                            </div>
                             <div class="ms-3 relative">
                                 <!-- Teams Dropdown -->
                                 <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
