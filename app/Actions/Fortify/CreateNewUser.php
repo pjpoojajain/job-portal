@@ -35,8 +35,6 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
         $user->assignRole($input['role']);
-        // $user = User::find(1);
-        // $user->assignRole('employer');
         if ($input['role'] === 'employer') {
             $user->givePermissionTo(['create job', 'edit job', 'delete job']);
         }
