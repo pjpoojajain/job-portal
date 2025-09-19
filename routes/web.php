@@ -19,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if ($user->hasRole('employer')) {
             return Inertia::render('Employer/Employer');
         } elseif ($user->hasRole('jobseeker')) {
-            return Inertia::render('Jobseeker');
+            return Inertia::render('JobSeeker/Jobseeker');
         } else {
             return Inertia::render('Dashboard');
         }
@@ -34,4 +34,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('employer.jobs.store');
         Route::get('/employer/jobs', [\App\Http\Controllers\JobController::class, 'index'])
             ->name('employer.jobs.index');
+    });
+
+    Route::middleware(['auth', 'role:jobseeker'])->group(function () {
+        Route::get('/jobseeker/all-jobs', [\App\Http\Controllers\ApplicationController::class, 'index'])
+        ->name('jobseeker.browsejob');
+        
     });

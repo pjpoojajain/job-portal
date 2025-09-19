@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="p-4 border rounded shadow">
         <h2 class="font-semibold mb-2">🔍 Browse Jobs</h2>
-        <Link href="/jobs" class="text-blue-600 hover:underline">Find Opportunities</Link>
+        <Link :href="route('jobseeker.browsejob')" class="text-blue-600 hover:underline">Find Opportunities</Link>
       </div>
 
       <div class="p-4 border rounded shadow">

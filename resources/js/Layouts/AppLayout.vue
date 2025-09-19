@@ -53,9 +53,9 @@ const logout = () => {
                                 </button>
                             </div>
                             <div v-if="$page.props.authUser.roles.includes('jobseeker')" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                <Link type="button" :href="route('jobseeker.browsejob')" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                 Jobs
-                                </button>
+                                </Link>
                                 <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                 Companies
                                 </button>
