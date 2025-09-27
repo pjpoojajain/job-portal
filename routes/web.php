@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\HomepageController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -12,6 +15,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/all-listed-jobs', [HomepageController::class, 'index'])
+        ->name('index');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $user = auth()->user();
@@ -30,14 +35,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employer/post-job', function () {
             return Inertia::render('Employer/EmployerPostJob');
         })->name('employer.postJob');
-        Route::post('/employer/jobs/create', [\App\Http\Controllers\JobController::class, 'store'])
+        Route::post('/employer/jobs/create', [JobController::class, 'store'])
             ->name('employer.jobs.store');
-        Route::get('/employer/jobs', [\App\Http\Controllers\JobController::class, 'index'])
+        Route::get('/employer/jobs', [JobController::class, 'index'])
             ->name('employer.jobs.index');
     });
 
     Route::middleware(['auth', 'role:jobseeker'])->group(function () {
-        Route::get('/jobseeker/all-jobs', [\App\Http\Controllers\ApplicationController::class, 'index'])
-        ->name('jobseeker.browsejob');
-        
+        Route::get('/jobseeker/all-jobs', [ApplicationController::class, 'index'])
+        ->name('jobseeker.index');
+        Route::get('/jobseeker/show/{job}', [ApplicationController::class, 'show'])
+        ->name('jobseeker.show');
+        Route::post('/jobseeker/{job}/apply', [ApplicationController::class, 'apply'])
+            ->name('jobseeker.apply');
     });

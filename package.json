@@ -24,6 +24,7 @@
     "dependencies": {
         "@coreui/icons": "^3.0.1",
         "@coreui/icons-vue": "^2.2.0",
+        "esbuild": "^0.25.10",
         "lucide-vue-next": "^0.544.0"
     }
 }
