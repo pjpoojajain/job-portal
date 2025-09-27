@@ -39,6 +39,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('employer.jobs.store');
         Route::get('/employer/jobs', [JobController::class, 'index'])
             ->name('employer.jobs.index');
+        Route::get('/employer/jobs/{job}/edit', [JobController::class, 'edit'])
+            ->name('employer.jobs.edit');
+        Route::put('/employer/jobs/{job}', [JobController::class, 'update'])
+            ->name('employer.jobs.update');  
+        Route::delete('/employer/jobs/{id}', [JobController::class, 'destroy'])
+            ->name('employer.jobs.destroy');  
     });
 
     Route::middleware(['auth', 'role:jobseeker'])->group(function () {

@@ -7,9 +7,13 @@ use App\Models\All_job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class JobController extends Controller
 {
+    use AuthorizesRequests;
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -43,4 +47,43 @@ class JobController extends Controller
             'jobs' => $jobs
         ]);
     }
+    public function edit(All_job $job)
+    {
+        // Ensure only owner can edit
+        $this->authorize('update', $job);
+
+        return Inertia::render('Employer/EditJob', [
+            'job' => $job,
+        ]);
+    }
+
+     public function update(Request $request, All_job $job)
+    {
+        $this->authorize('update', $job);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'salary' => 'nullable|numeric',
+        ]);
+
+        $job->update($validated);
+
+        return redirect()->route('dashboard')->with('success', 'Job updated successfully!');
+    }
+
+     public function destroy($id)
+    {
+        $job = All_job::findOrFail($id);
+
+        // Optional: only allow the employer who created it to delete
+        $this->authorize('delete', $job);
+
+        $job->delete();
+
+        return redirect()->route('dashboard')
+                        ->with('success', 'Job deleted successfully.');
+    }
+
 }
