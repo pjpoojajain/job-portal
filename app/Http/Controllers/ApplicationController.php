@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\All_job;
 use App\Models\JobApplication;
 use Inertia\Inertia;
+use App\Models\UsersResume;
 
 class ApplicationController extends Controller
 {
@@ -54,6 +55,34 @@ class ApplicationController extends Controller
         ]);
 
         return back()->with('success', 'Application submitted successfully!');
+    }
+
+    public function upload(Request $request){
+        $request->validate([
+                'resume' => 'required|mimes:pdf'
+        ]);
+        if($request->hasFile('resume')){
+        $fileName = time().'.'.$request->resume->extension();
+        $request->resume->move(public_path('uploads'),$fileName);
+        
+            UsersResume::updateOrCreate([
+                'user_id' => Auth::id(),
+                'fileName' => $fileName
+            ]);
+            return response()->json([
+            'success' => true,
+            'message' => 'File uploaded successfully',
+            'file' => $fileName,
+            'path' => asset('uploads/resumes/' . $fileName),
+        ]);
+        }
+
+        return response()->json([
+        'success' => false,
+        'message' => 'No file uploaded',
+    ], 400);
+            
+        
     }
 
 }

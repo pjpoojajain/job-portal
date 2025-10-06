@@ -49,9 +49,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['auth', 'role:jobseeker'])->group(function () {
         Route::get('/jobseeker/all-jobs', [ApplicationController::class, 'index'])
-        ->name('jobseeker.index');
+            ->name('jobseeker.index');
         Route::get('/jobseeker/show/{job}', [ApplicationController::class, 'show'])
-        ->name('jobseeker.show');
+            ->name('jobseeker.show');
         Route::post('/jobseeker/{job}/apply', [ApplicationController::class, 'apply'])
             ->name('jobseeker.apply');
+        Route::post('/jobseeker/uploadResume', [ApplicationController::class, 'upload'])
+            ->name('jobseeker.uploadResume');
     });
